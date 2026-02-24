@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Minecraft Лицензии{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Официальные лицензии Minecraft</h1>
+        <p>Купите лицензионную версию Minecraft по лучшей цене. Мгновенная доставка, официальные ключи, полная поддержка.</p>
+        <a href="{{ url_for('products') }}" class="btn btn-primary">Посмотреть продукты</a>
+    </div>
+    <div class="hero-image">
+        <i class="fas fa-cube"></i>
+    </div>
+</div>
+
+<div class="features">
+    <h2 class="section-title">Почему выбирают нас?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Мгновенная доставка</h3>
+            <p>Получите ключ активации сразу после оплаты</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Официальные лицензии</h3>
+            <p>Все ключи приобретаются напрямую у Mojang/Microsoft</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h3>Круглосуточная поддержка</h3>
+            <p>Наша служба поддержки поможет в любое время</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h3>Лучшие цены</h3>
+            <p>Самые выгодные предложения на рынке</p>
+        </div>
+    </div>
+</div>
+
+<div class="popular-products">
+    <h2 class="section-title">Популярные продукты</h2>
+    <div class="products-grid">
+        {% for product in [
+            {"name": "Minecraft Java Edition", "price": 26.95, "desc": "Классическая версия для ПК"},
+            {"name": "Minecraft Bedrock Edition", "price": 29.99, "desc": "Для Windows 10/11 и консолей"},
+            {"name": "Minecraft Realm (30 дней)", "price": 7.99, "desc": "Персональный сервер"}
+        ] %}
+        <div class="product-card">
+            <h3>{{ product.name }}</h3>
+            <p class="product-desc">{{ product.desc }}</p>
+            <p class="product-price">{{ product.price }} $</p>
+            <a href="{{ url_for('products') }}" class="btn btn-outline">Подробнее</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

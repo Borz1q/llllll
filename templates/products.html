@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Продукты - Minecraft Лицензии{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Наши продукты</h1>
+<p class="page-subtitle">Выберите подходящую лицензию Minecraft</p>
+
+<div class="products-container">
+    {% for product in products %}
+    <div class="product-card-full">
+        <div class="product-header">
+            <h3>{{ product.name }}</h3>
+            <span class="product-price">{{ product.price }} $</span>
+        </div>
+        <div class="product-body">
+            <p>{{ product.description }}</p>
+            <div class="product-actions">
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary">
+                    <i class="fas fa-cart-plus"></i> В корзину
+                </a>
+                <a href="{{ product.license_link }}" target="_blank" class="btn btn-outline">
+                    <i class="fas fa-external-link-alt"></i> Подробнее о лицензии
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="info-box">
+    <h3><i class="fas fa-info-circle"></i> Как это работает?</h3>
+    <ol>
+        <li>Выберите нужный продукт и добавьте его в корзину</li>
+        <li>Перейдите в корзину и оформите заказ</li>
+        <li>После оплаты вы получите ссылку на скачивание лицензии</li>
+        <li>Активируйте лицензию в своей учетной записи Minecraft</li>
+    </ol>
+</div>
+{% endblock %}

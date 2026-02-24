@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Оформление заказа - Minecraft Лицензии{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Оформление заказа</h1>
+
+<div class="checkout-container">
+    <div class="checkout-form-container">
+        <h2>Данные для заказа</h2>
+        <p>После оформления заказа вы получите ссылку на лицензию по электронной почте.</p>
+
+        <form action="{{ url_for('checkout') }}" method="POST" class="checkout-form">
+            <div class="form-group">
+                <label for="name">ФИО:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <small>На этот адрес будет отправлена ссылка на лицензию</small>
+            </div>
+
+            <div class="form-group">
+                <label for="payment">Способ оплаты:</label>
+                <select id="payment" name="payment">
+                    <option value="card">Банковская карта</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="yoomoney">ЮMoney</option>
+                    <option value="crypto">Криптовалюта</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="agree" required>
+                    Я согласен с <a href="#">условиями обслуживания</a> и <a href="#">политикой конфиденциальности</a>
+                </label>
+            </div>
+
+            <div class="checkout-actions">
+                <a href="{{ url_for('cart') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Вернуться в корзину
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-lock"></i> Перейти к оплате
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="order-summary">
+        <h2>Ваш заказ</h2>
+        <div class="order-items">
+            {% if session.get('cart') %}
+                {% for item in session['cart'] %}
+                <div class="order-item">
+                    <span>{{ item.name }} x{{ item.quantity }}</span>
+                    <span>{{ item.price * item.quantity }} $</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>Корзина пуста</p>
+            {% endif %}
+        </div>
+
+        <div class="order-total">
+            <div class="total-line">
+                <span>Промежуточный итог:</span>
+                <span>{{ session.get('cart')|sum(attribute='price')|default(0) }} $</span>
+            </div>
+            <div class="total-line">
+                <span>Скидка:</span>
+                <span>0.00 $</span>
+            </div>
+            <div class="total-line grand-total">
+                <span>Итого к оплате:</span>
+                <span>{{ session.get('cart')|sum(attribute='price')|default(0) }} $</span>
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <h3><i class="fas fa-shield-alt"></i> Безопасная оплата</h3>
+            <p>Все платежи защищены шифрованием. Мы не храним данные вашей карты.</p>
+            <div class="payment-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-bitcoin"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
